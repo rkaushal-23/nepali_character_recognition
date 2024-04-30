@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+</head>
+<body>
+    <h1>Result</h1>
+    <div>
+        <h2>Predicted Devanagari Label: {{ devanagari_label }}</h2>
+        <p>Phonetics: {{ phonetics }}</p>
+    </div>
+    <div>
+        <h2>Uploaded Image</h2>
+        <img src="{{ url_for('static', filename=uploaded_image) }}" alt="Uploaded Image">
+    </div>
+</body>
+</html>

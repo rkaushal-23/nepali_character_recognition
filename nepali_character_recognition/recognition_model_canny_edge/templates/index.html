@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepali Character Recognition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .character-mappings {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td {
+            border: 1px solid #ddd;
+        }
+
+        strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Nepali Character Recognition</h1>
+        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput">
+            <button type="submit">Upload</button>
+            <div class="loader" id="loader"></div>
+        </form>
+        <div id="result" class="result"></div>
+        <div class="character-mappings">
+            <h2>Character Mappings</h2>
+            <table>
+                <tr>
+                    <th>Consonants</th>
+                    <th>Numbers</th>
+                    <th>Vowels</th>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>क - ka</strong><br>
+                        <strong>ख - kha</strong><br>
+                        <strong>ग - ga</strong><br>
+                        <strong>घ - gha</strong><br>
+                        <strong>ङ - ṅa</strong><br>
+                        <strong>च - ca</strong><br>
+                        <strong>छ - cha</strong><br>
+                        <strong>ज - ja</strong><br>
+                        <strong>झ - jha</strong><br>
+                        <strong>ञ - ña</strong><br>
+                        <strong>ट - ṭa</strong><br>
+                        <strong>ठ - ṭha</strong><br>
+                        <strong>ड - ḍa</strong><br>
+                        <strong>ढ - ḍha</strong><br>
+                        <strong>ण - ṇa</strong><br>
+                        <strong>त - ta</strong><br>
+                        <strong>थ - tha</strong><br>
+                        <strong>द - da</strong><br>
+                        <strong>ध - dha</strong><br>
+                        <strong>न - na</strong><br>
+                        <strong>प - pa</strong><br>
+                        <strong>फ - pha</strong><br>
+                        <strong>ब - ba</strong><br>
+                        <strong>भ - bha</strong><br>
+                        <strong>म - ma</strong><br>
+                        <strong>य - ya</strong><br>
+                        <strong>र - ra</strong><br>
+                        <strong>ल - la</strong><br>
+                        <strong>व - wa/va</strong><br>
+                        <strong>श - śa</strong><br>
+                        <strong>ष - ṣa</strong><br>
+                        <strong>स - sa</strong><br>
+                        <strong>ह - ha</strong><br>
+                        <strong>क्ष - kṣa</strong><br>
+                        <strong>त्र - tra</strong><br>
+                        <strong>ज्ञ - jña</strong><br>
+                    </td>
+                    <td>
+                        <strong>० - sunya (zero)</strong><br>
+                        <strong>१ - ek</strong><br>
+                        <strong>२ - dui</strong><br>
+                        <strong>३ - tin</strong><br>
+                        <strong>४ - char</strong><br>
+                        <strong>५ - paanch</strong><br>
+                        <strong>६ - chha</strong><br>
+                        <strong>७ - saat</strong><br>
+                        <strong>८ - aath</strong><br>
+                        <strong>९ - nau</strong><br>
+                        <!-- Add more numbers here -->
+                    </td>
+                    <td>
+                        <strong>्/अ - a</strong><br>
+                        <strong>ा/आ - ā</strong><br>
+                        <strong>ि/इ - i</strong><br>
+                        <strong>ी/ई - ī</strong><br>
+                        <strong>ु/उ - u</strong><br>
+                        <strong>ू/ऊ - ū</strong><br>
+                        <strong>े/ए - e</strong><br>
+                        <strong>ै/ऐ - ai</strong><br>
+                        <strong>ो/ओ - o</strong><br>
+                        <strong>ौ/औ - au</strong><br>
+                        <strong>ं/अं - aṁ</strong><br>
+                        <strong>ः/अः - aḥ</strong><br>
+                        <strong>ॐ - om</strong><br>
+                        <strong>ँ/अँ - anunāsika</strong><br>
+                        <strong>ॠ - ri</strong><br>
+                        <strong>। - pūrna virāma</strong><br>
+                        <strong>॥ - deerga virāma</strong><br>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#uploadForm').submit(function (event) {
+                event.preventDefault();
+                $('#loader').show();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: '/upload',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        $('#loader').hide();
+                        if (response.error) {
+                            $('#result').html('<p class="error">Error: ' + response.error + '</p>');
+                        } else {
+                            $('#result').html('<h2>Predicted Devanagari Character: ' + response.devanagari_label + '</h2><img src="' + response.uploaded_image + '" alt="Uploaded Image">');
+                        }
+                    },
+                    error: function () {
+                        $('#loader').hide();
+                        $('#result').html('<p class="error">Error: Failed to upload image</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

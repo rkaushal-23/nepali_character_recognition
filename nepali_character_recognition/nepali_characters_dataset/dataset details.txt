@@ -1,0 +1,17 @@
+1988*10 numbers		=	19880
+221*12 vowels		=	2652
+1905*36 consonants	=	68580
+------------------------------------
+Total			=	91112
+
+https://www.kaggle.com/datasets/gopendu/devnagari-deeplearn
+https://www.kaggle.com/datasets/ashokpant/devanagari-character-dataset
+
+Nepali Consonants:
+'क','ख','ग','घ','ङ','च',छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','व','श','ष','स','क्ष','त्र','ज्ञ'
+
+Vowels:
+'अ','आ','इ','ई','उ','ऊ','ए','ऐ','ओ','औ','अं','अः','ॠ'
+
+Numbers:
+'०','१','२','३','४','५','६','७','८','९'
